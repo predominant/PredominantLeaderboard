@@ -5,13 +5,13 @@ import models
 import schemas
 
 
-def get_level_leaderboard(db: Session, game: str, level: str):
+def get_level_leaderboard(db: Session, game: str, level: str, count: int):
     return (
         db
         .query(models.Score)
         .filter(and_(models.Score.game == game, models.Score.level == level))
         .order_by(desc(models.Score.score))
-        .limit(10)
+        .limit(count)
         .all()
     )
 

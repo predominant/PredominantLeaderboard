@@ -25,8 +25,9 @@ async def root():
 
 
 @app.get("/leaderboard/{game}/{level}", response_model=list[schemas.Score])
-async def get_scores(game: str, level: str, db: Session = Depends(get_db)):
-    scores = crud.get_level_leaderboard(db, game=game, level=level)
+async def get_scores(game: str, level: str, count: int = 10, db: Session = Depends(get_db)):
+    print(count)
+    scores = crud.get_level_leaderboard(db, game=game, level=level, count=count)
     return scores
 
 
