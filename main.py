@@ -24,14 +24,14 @@ async def root():
     return {"message": "Hello Leaderboards"}
 
 
-@app.get("/leaderboard/{game}/{level}", response_model=list[schemas.Score])
+@app.get("/{game}/{level}", response_model=list[schemas.Score])
 async def get_scores(game: str, level: str, count: int = 10, db: Session = Depends(get_db)):
     print(count)
     scores = crud.get_level_leaderboard(db, game=game, level=level, count=count)
     return scores
 
 
-@app.post("/leaderboard/{game}/{level}/{player}/{score}", response_model=schemas.Score)
+@app.post("/{game}/{level}/{player}/{score}", response_model=schemas.Score)
 async def record_score(game: str, level: str, player: str, score: int, db: Session = Depends(get_db)):
     db_score = crud.set_score(db, game=game, level=level, player=player, score=score)
     return db_score
